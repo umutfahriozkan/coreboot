@@ -1,0 +1,129 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+chip northbridge/intel/ironlake		# Northbridge
+	chip cpu/intel/model_2065x
+		device cpu_cluster 0 on
+			ops ironlake_cpu_bus_ops
+		end
+	end
+	device domain 0 on
+		ops ironlake_pci_domain_ops
+		device pci 0.0 on end # Host Bridge
+		device pci 1.0 off end # PCIe just disable
+		device pci 2.0 on end # Integrated graphics controller
+		chip southbridge/intel/ibexpeak
+			# GPI routing
+			#  0b00,0 No effect (default)
+			#  0b01,1 SMI# (if corresponding ALT_GPI_SMI_EN bit is also set)
+			#  0b10,2 SCI (if corresponding GPIO_EN bit is also set)
+			register "gpi0_routing" = "1"
+			register "gpi1_routing" = "1"
+			register "gpi2_routing" = "1"
+			register "gpi3_routing" = "1"
+			register "gpi4_routing" = "1"
+			register "gpi5_routing" = "1"
+			register "gpi6_routing" = "1"
+			register "gpi7_routing" = "1"
+			register "gpi8_routing" = "1"
+			register "gpi9_routing" = "1"
+			register "gpi10_routing" = "1"
+			register "gpi11_routing" = "1"
+			register "gpi12_routing" = "1"
+			register "gpi13_routing" = "2"
+			register "gpi14_routing" = "1"
+			register "gpi15_routing" = "1"
+
+			register "gpe0_en" = "0x140"
+			register "alt_gp_smi_en" = "0x800"
+			register "spi_uvscc" = "0x2005"
+			register "spi_lvscc" = "0x2005"
+			register "pcie_hotplug_map" = "{ 1, 1 }"
+			register "sata_port_map" = "0xf"
+			register "sata_interface_speed_support" = "0x2"
+			register "gen1_dec" = "0x000c0801"
+			register "gen2_dec" = "0x000c0291"
+			register "gen3_dec" = "0"
+			register "gen4_dec" = "0"
+
+			device pci 16.0 on end # MEI HECI
+			device pci 1a.0 on end # UHCI
+			device pci 1a.1 on end # UHCI
+			device pci 1a.2 on end # UHCI
+			device pci 1a.7 on end # EHCI
+			device pci 1b.0 on end # Audio
+			device pci 1c.0 on end # PCIe 1
+			device pci 1c.5 on end # PCIe 2
+
+
+			device pci 1d.0 on end # UHCI
+			device pci 1d.1 on end # UHCI
+			device pci 1d.2 on end # UHCI
+			device pci 1d.7 on end # EHCI
+
+			device pci 1e.0 off end # PCI bridge
+			device pci 1f.0 on # ISA bridge
+				chip superio/ite/it8720f #Super I/O
+					register "TMPIN1.mode" = "THERMAL_RESISTOR"
+					register "TMPIN2.mode" = "THERMAL_RESISTOR"
+					register "TMPIN3.mode" = "THERMAL_DIODE"
+					register "TMPIN3.offset" = "0"
+					register "ec.vin_mask" = "VIN7 | VIN4 | VIN3 | VIN2 | VIN1 | VIN0"
+
+					register "FAN1.mode" = "FAN_SMART_AUTOMATIC"
+					register "FAN1.smart.tmpin" = "3"
+					register "FAN1.smart.tmp_off" = "25"
+					register "FAN1.smart.tmp_start" = "30"
+					register "FAN1.smart.tmp_full" = "65"
+					register "FAN1.smart.tmp_delta" = "3"
+					register "FAN1.smart.smoothing" = "1"
+					register "FAN1.smart.pwm_start" = "0"
+					register "FAN1.smart.slope" = "10"
+
+					register "FAN2.mode" = "FAN_SMART_AUTOMATIC"
+					register "FAN2.smart.tmpin" = "3"
+					register "FAN2.smart.tmp_off" = "25"
+					register "FAN2.smart.tmp_start" = "30"
+					register "FAN2.smart.tmp_full" = "65"
+					register "FAN2.smart.tmp_delta" = "3"
+					register "FAN2.smart.smoothing" = "1"
+					register "FAN2.smart.pwm_start" = "0"
+					register "FAN2.smart.slope" = "10"
+
+					device pnp 2e.0 off end # Floppy
+					device pnp 2e.1 off end # COM1
+					# irq 0xf1 = 0x50
+					device pnp 2e.2 off end # COM2
+					device pnp 2e.3 off end # Parallel Port
+					device pnp 2e.4 on # Environment controller
+						io 0x60 = 0x290
+						io 0x62 = 0x000
+						irq 0x70 = 0x00
+						irq 0xf0 = 0x80
+						irq 0xf1 = 0x40
+						irq 0xf2 = 0x0a
+						irq 0xf3 = 0x00
+						irq 0xf4 = 0x01
+						irq 0xf5 = 0x00
+						irq 0xf6 = 0xff
+					end
+					device pnp 2e.5 on # Keyboard
+						io 0x60 = 0x60
+						io 0x62 = 0x64
+						irq 0x70 = 1
+						irq 0x71 = 2
+						irq 0xf0 = 0x48
+					end
+					device pnp 2e.6 on # Mouse
+						irq 0x70 = 0
+						irq 0x71 = 2
+						irq 0xf0 = 0
+					end
+					device pnp 2e.a off end # Ir
+				end
+			end
+			device pci 1f.2 on end # SATA
+			device pci 1f.3 on end # SMBus
+			device pci 1f.5 on end # SATA
+		end
+	end
+end
