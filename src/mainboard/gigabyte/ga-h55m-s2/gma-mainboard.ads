@@ -4,5 +4,5 @@ use HW.GFX.GMA;
 use HW.GFX.GMA.Display_Probing;
 
 private package GMA.Mainboard is
-   ports : constant Port_List := (Analog);
+   ports : constant Port_List := (Analog, others => Disabled);
 end GMA.Mainboard;

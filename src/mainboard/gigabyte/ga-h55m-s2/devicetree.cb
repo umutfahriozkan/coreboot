@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
-chip northbridge/intel/ironlake		# Northbridge
+chip northbridge/intel/ironlake
 	chip cpu/intel/model_2065x
 		device cpu_cluster 0 on
 			ops ironlake_cpu_bus_ops
@@ -8,9 +8,14 @@ chip northbridge/intel/ironlake		# Northbridge
 	end
 	device domain 0 on
 		ops ironlake_pci_domain_ops
-		device pci 0.0 on end # Host Bridge
+		subsystemid 0x1458 0x5000 inherit
+		device pci 0.0 on
+			subsystemid 0x1458 0x5000
+		end
 		device pci 1.0 off end # PCIe just disable
-		device pci 2.0 on end # Integrated graphics controller
+		device pci 2.0 on
+			subsystemid 0x1458 0xd000
+		end
 		chip southbridge/intel/ibexpeak
 			# GPI routing
 			#  0b00,0 No effect (default)
@@ -45,50 +50,49 @@ chip northbridge/intel/ironlake		# Northbridge
 			register "gen3_dec" = "0"
 			register "gen4_dec" = "0"
 
-			device pci 16.0 on end # MEI HECI
-			device pci 1a.0 on end # UHCI
-			device pci 1a.1 on end # UHCI
-			device pci 1a.2 on end # UHCI
-			device pci 1a.7 on end # EHCI
-			device pci 1b.0 on end # Audio
-			device pci 1c.0 on end # PCIe 1
-			device pci 1c.5 on end # PCIe 2
+			device pci 16.0 on # MEI HECI
+				subsystemid 0x1458 0x3b64
+			end
+			device pci 1a.0 on # UHCI
+				subsystemid 0x1458 0x5004
+			end
+			device pci 1a.1 on # UHCI
+				subsystemid 0x1458 0x5004
+			end
+			device pci 1a.2 on # UHCI
+				subsystemid 0x1458 0x5004
+			end
+			device pci 1a.7 on # EHCI
+				subsystemid 0x1458 0x5006
+			end
+			device pci 1b.0 on # Audio
+				subsystemid 0x1458 0xa002
+			end
+			device pci 1c.0 on # PCIe x16 1
+				subsystemid 0x1458 0x5001
+			end
+			device pci 1c.5 on # PCIe x1 2
+				subsystemid 0x1458 0x5001
+			end
 
-
-			device pci 1d.0 on end # UHCI
-			device pci 1d.1 on end # UHCI
-			device pci 1d.2 on end # UHCI
-			device pci 1d.7 on end # EHCI
+			device pci 1d.0 on # UHCI
+				subsystemid 0x1458 0x5004
+			end
+			device pci 1d.1 on # UHCI
+				subsystemid 0x1458 0x5004
+			end
+			device pci 1d.2 on # UHCI
+				subsystemid 0x1458 0x5004
+			end
+			device pci 1d.7 on # EHCI
+				subsystemid 0x1458 0x5006
+			end
 
 			device pci 1e.0 off end # PCI bridge
+			#1458:5000
 			device pci 1f.0 on # ISA bridge
+				subsystemid 0x1458 0x5001
 				chip superio/ite/it8720f #Super I/O
-					register "TMPIN1.mode" = "THERMAL_RESISTOR"
-					register "TMPIN2.mode" = "THERMAL_RESISTOR"
-					register "TMPIN3.mode" = "THERMAL_DIODE"
-					register "TMPIN3.offset" = "0"
-					register "ec.vin_mask" = "VIN7 | VIN4 | VIN3 | VIN2 | VIN1 | VIN0"
-
-					register "FAN1.mode" = "FAN_SMART_AUTOMATIC"
-					register "FAN1.smart.tmpin" = "3"
-					register "FAN1.smart.tmp_off" = "25"
-					register "FAN1.smart.tmp_start" = "30"
-					register "FAN1.smart.tmp_full" = "65"
-					register "FAN1.smart.tmp_delta" = "3"
-					register "FAN1.smart.smoothing" = "1"
-					register "FAN1.smart.pwm_start" = "0"
-					register "FAN1.smart.slope" = "10"
-
-					register "FAN2.mode" = "FAN_SMART_AUTOMATIC"
-					register "FAN2.smart.tmpin" = "3"
-					register "FAN2.smart.tmp_off" = "25"
-					register "FAN2.smart.tmp_start" = "30"
-					register "FAN2.smart.tmp_full" = "65"
-					register "FAN2.smart.tmp_delta" = "3"
-					register "FAN2.smart.smoothing" = "1"
-					register "FAN2.smart.pwm_start" = "0"
-					register "FAN2.smart.slope" = "10"
-
 					device pnp 2e.0 off end # Floppy
 					device pnp 2e.1 off end # COM1
 					# irq 0xf1 = 0x50
@@ -98,32 +102,27 @@ chip northbridge/intel/ironlake		# Northbridge
 						io 0x60 = 0x290
 						io 0x62 = 0x000
 						irq 0x70 = 0x00
-						irq 0xf0 = 0x80
-						irq 0xf1 = 0x40
-						irq 0xf2 = 0x0a
-						irq 0xf3 = 0x00
-						irq 0xf4 = 0x01
-						irq 0xf5 = 0x00
-						irq 0xf6 = 0xff
 					end
-					device pnp 2e.5 on # Keyboard
-						io 0x60 = 0x60
-						io 0x62 = 0x64
-						irq 0x70 = 1
-						irq 0x71 = 2
-						irq 0xf0 = 0x48
-					end
-					device pnp 2e.6 on # Mouse
-						irq 0x70 = 0
-						irq 0x71 = 2
-						irq 0xf0 = 0
-					end
+					device pnp 2e.5 off end # Keyboard
+					#	io 0x60 = 0x60
+					#	io 0x62 = 0x64
+					#	irq 0x70 = 1
+					#end
+					device pnp 2e.6 off end # Mouse
+					#	irq 0x70 = 12
+					#end
 					device pnp 2e.a off end # Ir
 				end
 			end
-			device pci 1f.2 on end # SATA
-			device pci 1f.3 on end # SMBus
-			device pci 1f.5 on end # SATA
+			device pci 1f.2 on # SATA
+				subsystemid 0x1458 0xb002
+			end
+			device pci 1f.3 on # SMBus
+				subsystemid 0x1458 0x5001
+			end
+			device pci 1f.5 on # IDE
+				subsystemid 0x1458 0xb002
+			end
 		end
 	end
 end

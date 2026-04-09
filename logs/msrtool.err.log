@@ -1,0 +1,4 @@
+msrtool 25.12
+Detected system linux: Linux with /dev/cpu/*/msr
+Detected target intel_nehalem: Intel Core i5, i7 Processors, Intel Xeon Processor 3400, 3500, 5500, based on Nehalem architecture
+
