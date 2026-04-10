@@ -93,25 +93,26 @@ chip northbridge/intel/ironlake
 			device pci 1f.0 on # ISA bridge
 				subsystemid 0x1458 0x5001
 				chip superio/ite/it8720f #Super I/O
-					device pnp 2e.0 off end # Floppy
-					device pnp 2e.1 off end # COM1
-					# irq 0xf1 = 0x50
-					device pnp 2e.2 off end # COM2
-					device pnp 2e.3 off end # Parallel Port
+					#device pnp 2e.0 off end # Floppy
+					device pnp 2e.1 on # COM1
+						io  0x60 = 0x3f8
+						irq 0x70 = 0x04
+						irq 0xf1 = 0x80
+					end
+					#device pnp 2e.2 off end # COM2
+					#device pnp 2e.3 off end # Parallel Port
 					device pnp 2e.4 on # Environment controller
 						io 0x60 = 0x290
 						io 0x62 = 0x000
 						irq 0x70 = 0x00
 					end
-					device pnp 2e.5 off end # Keyboard
-					#	io 0x60 = 0x60
-					#	io 0x62 = 0x64
-					#	irq 0x70 = 1
-					#end
-					device pnp 2e.6 off end # Mouse
-					#	irq 0x70 = 12
-					#end
-					device pnp 2e.a off end # Ir
+					device pnp 2e.5 on # Keyboard
+					end
+					device pnp 2e.6 on # Mouse
+						irq 0x70 = 0x0c
+					end
+					#device pnp 2e.7 on # GPIO end
+					#device pnp 2e.a off end # CIR
 				end
 			end
 			device pci 1f.2 on # SATA
