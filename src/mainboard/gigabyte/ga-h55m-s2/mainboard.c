@@ -11,7 +11,7 @@ static void mainboard_init(struct device *dev)
 
 static void mainboard_enable(struct device *dev)
 {
-	dev->ops->init = mainboard_init;
+	//dev->ops->init = mainboard_init;
 
 	install_intel_vga_int15_handler(GMA_INT15_ACTIVE_LFP_NONE, GMA_INT15_PANEL_FIT_DEFAULT,
 					GMA_INT15_BOOT_DISPLAY_DEFAULT, 0);

@@ -53,7 +53,7 @@ DefinitionBlock(
 //			#include <drivers/pc80/pc/ps2_controller.asl>
 //		}
 		}
-		#include <northbridge/intel/ironlake/acpi/uncore.asl>
+//		#include <northbridge/intel/ironlake/acpi/uncore.asl>
 		#include <superio/ite/it8720f/acpi/superio.asl>
 	}
 

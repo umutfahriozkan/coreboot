@@ -59,7 +59,7 @@ void early_pch_init(void)
 	early_gpio_init();
 	enable_smbus();
 	/* TODO, make this configurable */
-	pch_setup_cir(IRONLAKE_MOBILE);
+	pch_setup_cir(IRONLAKE_DESKTOP);
 	southbridge_configure_default_intmap();
 	pch_default_disable();
 	early_usb_init(mainboard_usb_ports);

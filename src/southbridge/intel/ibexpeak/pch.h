@@ -21,9 +21,9 @@
 
 #define SMBUS_SLAVE_ADDR	0x24
 /* TODO Make sure these don't get changed by stage2 */
-#define DEFAULT_GPIOBASE	0x0580
-#define DEFAULT_PMBASE		0x0400
-#define DEFAULT_HECIBAR		((u8 *)0xfbfff000)
+#define DEFAULT_GPIOBASE	0x0480
+#define DEFAULT_PMBASE		0x0500
+#define DEFAULT_HECIBAR		((u8 *)0xfed17000)
 
 #ifndef __ACPI__
 

@@ -26,7 +26,7 @@ void mainboard_romstage_entry(void)
 	u8 spd_addrmap[4] = {};
 
 	/* TODO, make this configurable */
-	ironlake_early_initialization(IRONLAKE_MOBILE);
+	ironlake_early_initialization(IRONLAKE_DESKTOP);
 
 	early_pch_init();
 
