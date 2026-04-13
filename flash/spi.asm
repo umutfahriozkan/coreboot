@@ -51,10 +51,10 @@
 ; FLREG0—Flash Region 0 (Flash Descriptor)
     dd 0x0
 ; FLREG1—Flash Region 1 (BIOS) Register from FRBA - 0x44
-    ; BIOS starts at 0x00100000, ends at 0x008FFFFF
-    ; start bits[24:12] => 0x0100
+    ; BIOS starts at 0x00800000, ends at 0x008FFFFF
+    ; start bits[24:12] => 0x0800
     ; end bits[24:12] => 0x8FFF
-    dd 0x08FF0100
+    dd 0x08FF0800
 ; FLREG2—Flash Region 2 (ME) Register from FRBA - 0x48
     ; ME starts at 0x00001000, ends at 0x00012000
     dd 0x00120001
