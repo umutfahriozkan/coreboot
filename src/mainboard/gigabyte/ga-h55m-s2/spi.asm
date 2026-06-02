@@ -51,10 +51,10 @@
 ; FLREG0—Flash Region 0 (Flash Descriptor)
     dd 0x0
 ; FLREG1—Flash Region 1 (BIOS) Register from FRBA - 0x44
-    ; BIOS starts at 0x00800000, ends at 0x008FFFFF
-    ; start bits[24:12] => 0x0800
+    ; BIOS starts at 0x00012000, ends at 0x008FFFFF
+    ; start bits[24:12] => 0x0012
     ; end bits[24:12] => 0x8FFF
-    dd 0x08FF0800
+    dd 0x08FF0012
 ; FLREG2—Flash Region 2 (ME) Register from FRBA - 0x48
     ; ME starts at 0x00001000, ends at 0x00012000
     dd 0x00120001
@@ -146,8 +146,8 @@
 
 ;   IFD end....
     times (0x1000 - ($ - $$)) db 0xFF
-    incbin "me"
-    times (0x00012000 - ($ - $$)) db 0xFF
+;    incbin "me"
+;    times (0x00012000 - ($ - $$)) db 0xFF
     
 ;    times (0x800000 - ($ - $$)) db 0xFF
 ;    incbin "../build/coreboot.rom"

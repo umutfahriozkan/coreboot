@@ -1,0 +1,2 @@
+* text=auto eol=lf
+#./cbfstool ../../AAA read -r CONSOLE -f spi_console
